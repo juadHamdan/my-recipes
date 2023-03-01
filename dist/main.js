@@ -9,8 +9,8 @@ const filteringOptions = {
 const renderer = new Renderer()
 const apiManager = new APIManager()
 
-
 /*
+
 $(".search-btn").click(function(){
     let inputJqueryObject = $(this).closest("div").find("input")
     let ingredient = inputJqueryObject.val()
@@ -32,10 +32,27 @@ apiManager.fetchRecipesByIngredient("oil").then(recipes => {
     console.log(allRecipes)
 })
 
+
 function handleRecipeClick(event){
-    const href = event.target.dataset.href
-    window.location.href = href
+
 }
+
+
+
+$(".recipes").on("click", ".recipe", function(event){
+    if(event.target.localName == 'img'){
+        return
+    }
+    window.location.href = $(this).data().href
+})
+
+
+$('.recipes').on("click", ".recipe img", function(){
+    console.log("image clicked.")
+    const message = $(this).closest('div').siblings('.ingredients').find('li:first-child').text()
+    alert(message)
+})
+
 
 
 

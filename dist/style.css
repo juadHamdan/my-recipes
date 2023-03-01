@@ -71,6 +71,7 @@ body{
 }
 
 .recipe{
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
     font-weight: bold;
     display: flex;
     flex-direction: column;
@@ -88,11 +89,14 @@ body{
 }
 
 .recipe img{
-    width: 95%;
+    width: 100%;
     height: auto;
     border-radius: 50px 20px 50px 20px;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
+}
+.recipe img:hover{
+    filter: brightness(85%);
 }
 
 .recipe .title{
