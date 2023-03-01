@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>My Recipes</title>
+</head>
+<body>
+  <div class="app-container">
+
+    <div class="form-container">
+      <div>
+        <input type="text" placeHolder="Type Ingredient"/>
+        <button class="btn search-btn">Search</button>
+      </div>
+      <div>
+        <input type="checkbox" onclick="filterOutGlutenRecipes(event)"/>
+        <label>Gluten Free</label>
+      </div>
+      <div>
+        <input type="checkbox" onclick="filterOutDairyRecipes(event)"/>
+        <label>Dairy Free</label>
+      </div>
+    </div>
+
+    <div class="recipes"></div>
+      <script id="recipes-template" type="text/x-handlebars-template">
+          {{#each recipes}}
+            <div class="recipe" data-href={{href}} onclick="handleRecipeClick(event)">
+              <h2 class="title">{{title}}</h2>
+              <div>
+                <div class="thumbnail-container">
+                  <img src={{thumbnail}} alt="Thumbnail"/>
+                </div>
+                <p>Ingredients:</p>
+                <ul class="ingredients">
+                  {{#each ingredients}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              </div>
+              </div>
+            </div>
+          {{/each}}
+          </div>
+      </script>
+
+    <script src="APIManager.js"></script>
+    <script src="Renderer.js"></script>
+    <script src="main.js"></script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: none;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap');
+
+
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #f3e5f5;
+}
+
+
+.form-container{
+    padding: 30px 20px 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.form-container input{
+    background-color: transparent;
+    margin-bottom: 10px;
+    padding: 10px 5px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #9c27b0;
+    font-size: large;
+}
+.form-container input:focus{
+    outline: none;
+}
+.form-container button{
+    padding: 10px 5px;
+    border-radius: 5px;
+    border: 1px solid #9c27b0;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    background-color: #9c27b0;
+}
+.form-container button:hover{
+    cursor: pointer;
+    filter: brightness(85%);
+}
+.form-container label{
+    font-size: large;
+
+}
+
+
+
+
+.recipes{
+    padding: 5%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.recipe{
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #ce93d8;
+    width: min(300px, 90%);
+    height: max-content;
+    height: auto;
+    border-radius: 5px;
+    padding: 10px 30px;
+}
+.recipe:hover{
+    cursor: pointer;
+    opacity: 0.75;
+}
+
+.recipe img{
+    width: 95%;
+    height: auto;
+    border-radius: 50px 20px 50px 20px;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.recipe .title{
+    display: flex;
+    align-self: center;
+    justify-self: center;
+}
+
+
+.recipe p{
+    margin: 0;
+}
+.ingredients{
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 10px 0 10px 30px;
+    width: 90%;
+    height: 200px;
+    overflow-y: scroll;
+    border-radius: 10px;
+}
+
