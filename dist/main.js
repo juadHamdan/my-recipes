@@ -1,6 +1,5 @@
 
 let allRecipes = []
-
 const filteringOptions = {
     glutenFreeClicked: false,
     dairyFreeClicked: true
@@ -9,41 +8,39 @@ const filteringOptions = {
 const renderer = new Renderer()
 const apiManager = new APIManager()
 
-/*
+const alertJqueryObject = $('.alert-container')
+const alertMessageJqueryObject = $('.alert')
+
+function showTimedMessage(message, timer){
+    alertJqueryObject.css('visibility', 'visible')
+    alertMessageJqueryObject.text(message)
+
+    setTimeout(() => {
+        alertJqueryObject.css('visibility', 'hidden')
+    }, timer)
+}
+
 
 $(".search-btn").click(function(){
     let inputJqueryObject = $(this).closest("div").find("input")
     let ingredient = inputJqueryObject.val()
 
+    if(!ingredient){
+        showTimedMessage("Please Write Ingredient", 2000)
+        return 
+    }
+
     apiManager.fetchRecipesByIngredient(ingredient).then(fetchedRecipes => {
+        if(fetchedRecipes.length === 0){
+            showTimedMessage("No Matched Recipes", 3000)
+            return
+        }
         allRecipes = fetchedRecipes
         renderer.renderRecipes(allRecipes)
         console.log(allRecipes)
     })
 
     inputJqueryObject.val('')
-})
-*/
-
-
-apiManager.fetchRecipesByIngredient("oil").then(recipes => {
-    allRecipes = recipes
-    renderer.renderRecipes(allRecipes)
-    console.log(allRecipes)
-})
-
-
-function handleRecipeClick(event){
-
-}
-
-
-
-$(".recipes").on("click", ".recipe", function(event){
-    if(event.target.localName == 'img'){
-        return
-    }
-    window.location.href = $(this).data().href
 })
 
 
@@ -52,8 +49,6 @@ $('.recipes').on("click", ".recipe img", function(){
     const message = $(this).closest('div').siblings('.ingredients').find('li:first-child').text()
     alert(message)
 })
-
-
 
 
 function filteredRecipes(){

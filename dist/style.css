@@ -14,10 +14,37 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap');
 
+:root{
+    --theme-color-primary: #9c27b0;
+    --theme-color-secondary: #ce93d8;
+}
 
 body{
     font-family: 'Roboto', sans-serif;
     background-color: #f3e5f5;
+}
+
+
+.alert-container{
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+}
+.alert{
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    background-color: var(--theme-color-secondary);
+    padding: 20px 40px;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.alert .close-btn{
+
 }
 
 
