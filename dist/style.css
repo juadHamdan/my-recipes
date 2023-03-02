@@ -43,10 +43,6 @@ body{
     border-radius: 5px;
 }
 
-.alert .close-btn{
-
-}
-
 
 .form-container{
     padding: 30px 20px 0 20px;
@@ -62,7 +58,7 @@ body{
     padding: 10px 5px;
     text-align: center;
     border-radius: 5px;
-    border: 1px solid #9c27b0;
+    border: 1px solid var(--theme-color-primary);
     font-size: large;
 }
 .form-container input:focus{
@@ -71,11 +67,11 @@ body{
 .form-container button{
     padding: 10px 5px;
     border-radius: 5px;
-    border: 1px solid #9c27b0;
+    border: 1px solid var(--theme-color-primary);
     color: white;
     font-size: large;
     font-weight: bold;
-    background-color: #9c27b0;
+    background-color: var(--theme-color-primary);
 }
 .form-container button:hover{
     cursor: pointer;
@@ -103,7 +99,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 1px solid #ce93d8;
+    border: 1px solid var(--theme-color-secondary);
     width: min(300px, 90%);
     height: max-content;
     height: auto;

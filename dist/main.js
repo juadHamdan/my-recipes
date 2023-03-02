@@ -2,7 +2,7 @@
 let allRecipes = []
 const filteringOptions = {
     glutenFreeClicked: false,
-    dairyFreeClicked: true
+    dairyFreeClicked: false
 }
 
 const renderer = new Renderer()
@@ -44,8 +44,15 @@ $(".search-btn").click(function(){
 })
 
 
+$('.recipes').on("click", ".recipe", function(event){
+    if(event.target.localName === 'img'){
+        return
+    }
+    window.location.href = $(this).data().href
+})
+
+
 $('.recipes').on("click", ".recipe img", function(){
-    console.log("image clicked.")
     const message = $(this).closest('div').siblings('.ingredients').find('li:first-child').text()
     alert(message)
 })

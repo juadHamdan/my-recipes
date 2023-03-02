@@ -5,14 +5,38 @@ const {Recipe, Recipes} = require('./recipes.js')
 const router = express.Router()
 
 const RECIPES_BY_INGREDIENT_URL = 'https://recipes-goodness-elevation.herokuapp.com/recipes/ingredient/';
+const RECIPE_BY_ID_URL = 'https://recipes-goodness-elevation.herokuapp.com/recipes/id/'
 
 function fetch(url){
     return urllib.request(url, function(err, response){
-        return response
-    }).then(response => {
-        return JSON.parse(response.data)
-    })
+            return response
+        })
+        .then(response => {
+            try{
+                return JSON.parse(response.data)
+            }
+            catch{
+                throw new Error('Not found')
+            }
+        })
 }
+
+router.get('/recipes/:id', function (req, res) {
+    const id = req.params.id
+
+    if(!id){
+        res.status(400).send({error: "BadRequest: filterByIngredient query not found."})
+        return
+    }
+
+    fetch(RECIPE_BY_ID_URL + id)
+        .then(recipe => {
+            res.send(new Recipe(recipe.idMeal, recipe.title, recipe.ingredients, recipe.thumbnail, recipe.href))
+        })
+        .catch(err => {
+            res.status(404).send({})
+        })
+})
 
 router.get('/recipes', function (req, res) {
     const ingredient = req.query?.filterByIngredient
@@ -22,17 +46,20 @@ router.get('/recipes', function (req, res) {
         return
     }
 
-    fetch(RECIPES_BY_INGREDIENT_URL + ingredient).then(data => {
-        const fetchedRecipes = data.results
-        const recipes = new Recipes()
+    fetch(RECIPES_BY_INGREDIENT_URL + ingredient)
+        .then(data => {
+            const fetchedRecipes = data.results
+            const recipes = new Recipes()
 
-        fetchedRecipes.forEach(fetchedRecipe => {
-            const recipe = new Recipe(fetchedRecipe.idMeal, fetchedRecipe.title, fetchedRecipe.ingredients, fetchedRecipe.thumbnail, fetchedRecipe.href)
-            recipes.addRecipe(recipe)
-        });
+            fetchedRecipes.forEach(recipe => {
+                recipes.addRecipe(new Recipe(recipe.idMeal, recipe.title, recipe.ingredients, recipe.thumbnail, recipe.href))
+            });
 
-        res.send(JSON.stringify(recipes))
-    })
+            res.send(JSON.stringify(recipes))
+        })
+        .catch(err => {
+            res.status(404).send({})
+        })
 })
 
 module.exports = router
