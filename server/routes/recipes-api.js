@@ -40,7 +40,13 @@ router.get('/recipes/:id', function (req, res) {
 })
 
 function getRecipesPatch(recipes, patchNum){
-    const recipesLen = recipes.length
+    const numOfPatches = Math.ceil(recipes.length / RECIPES_LIMIT)
+    console.log(numOfPatches)
+
+    if(patchNum <= 0 || patchNum > numOfPatches){
+        console.log("HERE")
+        throw new Error('PatchNum is out of limit')
+    }
 
     const startIndex = (patchNum - 1) * 6
     const endIndex = patchNum * RECIPES_LIMIT
@@ -54,7 +60,10 @@ router.get('/recipes', function (req, res) {
     const ingredient = req.query?.filterByIngredient
     const patchNum = req.query?.patchNum
 
-    //patch num check
+    if(!patchNum){
+        res.status(400).send({error: "BadRequest: patchNum query not found."})
+        return
+    }
 
     if(!ingredient){
         res.status(400).send({error: "BadRequest: filterByIngredient query not found."})
@@ -71,6 +80,7 @@ router.get('/recipes', function (req, res) {
             });
 
             res.send(JSON.stringify(getRecipesPatch(recipes._recipes, patchNum)))
+
         })
         .catch(err => {
             res.status(404).send({})

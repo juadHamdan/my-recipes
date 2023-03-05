@@ -122,7 +122,7 @@ function navigateRight(){
 }
 
 function navigateLeft(){
-    pageNum += 1
+    pageNum -= 1
     apiManager.fetchRecipesByIngredient(this.currentIngredient, pageNum).then(fetchedRecipes => {
         if(fetchedRecipes.length === 0){
             showTimedMessage("No Matched Recipes", 3000)
