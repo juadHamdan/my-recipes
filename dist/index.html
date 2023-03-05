@@ -36,6 +36,11 @@
       </div>
     </div>
 
+    <div class="navigation">
+      <button class="btn navigation-left" onclick="navigateLeft()">Left</button>
+      <button class="btn navigation-right" onclick="navigateRight()">right</button>
+    </div>
+
     <div class="recipes"></div>
       <script id="recipes-template" type="text/x-handlebars-template">
           {{#each recipes}}
@@ -56,6 +61,9 @@
           {{/each}}
           </div>
       </script>
+
+
+      </div>
 
     <script src="APIManager.js"></script>
     <script src="Renderer.js"></script>

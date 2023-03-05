@@ -4,7 +4,8 @@ const filteringOptions = {
     glutenFreeClicked: false,
     dairyFreeClicked: false
 }
-const pageNum = 1
+let pageNum = 1
+let currentIngredient = ""
 
 const renderer = new Renderer()
 const apiManager = new APIManager()
@@ -27,6 +28,7 @@ apiManager.fetchRecipesByIngredient("oil", pageNum).then(fetchedRecipes => {
         showTimedMessage("No Matched Recipes", 3000)
         return
     }
+    this.currentIngredient = "oil"
     allRecipes = fetchedRecipes
     renderer.renderRecipes(allRecipes)
     console.log(allRecipes)
@@ -41,6 +43,8 @@ $(".search-btn").click(function(){
         showTimedMessage("Please Write Ingredient", 2000)
         return 
     }
+
+    this.currentIngredient = ingredient
 
     apiManager.fetchRecipesByIngredient(ingredient, pageNum).then(fetchedRecipes => {
         if(fetchedRecipes.length === 0){
@@ -101,4 +105,31 @@ function filterOutDairyRecipes(event){
     const isChecked = event.target.checked
     isChecked ? filteringOptions.dairyFreeClicked = true : filteringOptions.dairyFreeClicked = false
     filteredRecipes()
+}
+
+
+function navigateRight(){
+    pageNum += 1
+    apiManager.fetchRecipesByIngredient(this.currentIngredient, pageNum).then(fetchedRecipes => {
+        if(fetchedRecipes.length === 0){
+            showTimedMessage("No Matched Recipes", 3000)
+            return
+        }
+        allRecipes = fetchedRecipes
+        renderer.renderRecipes(allRecipes)
+        console.log(allRecipes)
+    })
+}
+
+function navigateLeft(){
+    pageNum += 1
+    apiManager.fetchRecipesByIngredient(this.currentIngredient, pageNum).then(fetchedRecipes => {
+        if(fetchedRecipes.length === 0){
+            showTimedMessage("No Matched Recipes", 3000)
+            return
+        }
+        allRecipes = fetchedRecipes
+        renderer.renderRecipes(allRecipes)
+        console.log(allRecipes)
+    })
 }
