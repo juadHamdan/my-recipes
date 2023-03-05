@@ -9,6 +9,5 @@ class APIManager {
                 console.log(data)
                 return data
             })
-            .fail(errorThrown => alert(errorThrown))
     }
 }

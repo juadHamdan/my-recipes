@@ -44,7 +44,6 @@ function getRecipesPatch(recipes, patchNum){
     console.log(numOfPatches)
 
     if(patchNum <= 0 || patchNum > numOfPatches){
-        console.log("HERE")
         throw new Error('PatchNum is out of limit')
     }
 
@@ -79,7 +78,13 @@ router.get('/recipes', function (req, res) {
                 recipes.addRecipe(new Recipe(recipe.idMeal, recipe.title, recipe.ingredients, recipe.thumbnail, recipe.href))
             });
 
-            res.send(JSON.stringify(getRecipesPatch(recipes._recipes, patchNum)))
+            try{
+                res.send(JSON.stringify(getRecipesPatch(recipes._recipes, patchNum)))
+            }
+            catch(e){
+                res.status(400).send({error: e.message})
+            }
+            
 
         })
         .catch(err => {
@@ -88,62 +93,3 @@ router.get('/recipes', function (req, res) {
 })
 
 module.exports = router
-
-
-
-
-
-
-
-
-
-
-/*
-router.post('/todo', function (req, res) {
-    const text = req.body.text
-    const newTodo = { text: text, complete: false, priority: PRIORITY.LOW }
-
-    todos.addItem(newTodo)
-    res.send(todos.list)
-})
-
-router.put('/todo/complete/:todoID', function (req, res) {
-    const todoID = req.params.todoID
-    const todo = todos.getItem(todoID)
-    const newComplete = !(todo.complete) 
-    const newTodo = { ...todo, complete: newComplete}
-
-    todos.changeItem(todoID, newTodo)
-    res.send(todos.list)
-})
-
-router.put('/todo/priority/:todoID', function (req, res) {
-    const todoID = req.params.todoID
-    const todo = todos.getItem(todoID)
-    let newPriority = null
-
-    switch(todo.priority){
-        case PRIORITY.LOW:
-            newPriority = PRIORITY.MEDIUM
-            break
-        case PRIORITY.MEDIUM:
-            newPriority = PRIORITY.HIGH
-            break
-        case PRIORITY.HIGH:
-            newPriority = PRIORITY.LOW
-            break
-    }
-    const newTodo = { ...todo, priority: newPriority}
-
-    todos.changeItem(todoID, newTodo)
-    res.send(todos.list)
-})
-
-router.delete('/todo/:todoID', function (req, res) {
-    const todoID = req.params.todoID
-
-    todos.deleteItemByID(todoID)
-    res.send(todos.list)
-})
-
-*/

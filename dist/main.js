@@ -13,27 +13,27 @@ const apiManager = new APIManager()
 const alertJqueryObject = $('.alert-container')
 const alertMessageJqueryObject = $('.alert')
 
-function showTimedMessage(message, timer){
-    alertJqueryObject.css('visibility', 'visible')
-    alertMessageJqueryObject.text(message)
 
-    setTimeout(() => {
-        alertJqueryObject.css('visibility', 'hidden')
-    }, timer)
+function fetchAndRenderRecipesByIngredient(){
+    apiManager.fetchRecipesByIngredient(currentIngredient, pageNum).then(fetchedRecipes => {
+        if(fetchedRecipes.length === 0){
+            showTimedMessage("No Matched Recipes", 3000)
+            return
+        }
+        allRecipes = fetchedRecipes
+        renderer.renderRecipes(allRecipes)
+        console.log(allRecipes)
+    }).catch(err => {
+        if(pageNum <= 0){
+            showTimedMessage("No More Recipes", 2000)
+            pageNum = 1
+        }
+        else{
+            showTimedMessage("No More Recipes", 2000)
+            pageNum -= 1
+        }
+    })
 }
-
-
-apiManager.fetchRecipesByIngredient("oil", pageNum).then(fetchedRecipes => {
-    if(fetchedRecipes.length === 0){
-        showTimedMessage("No Matched Recipes", 3000)
-        return
-    }
-    this.currentIngredient = "oil"
-    allRecipes = fetchedRecipes
-    renderer.renderRecipes(allRecipes)
-    console.log(allRecipes)
-})
-
 
 $(".search-btn").click(function(){
     let inputJqueryObject = $(this).closest("div").find("input")
@@ -44,17 +44,8 @@ $(".search-btn").click(function(){
         return 
     }
 
-    this.currentIngredient = ingredient
-
-    apiManager.fetchRecipesByIngredient(ingredient, pageNum).then(fetchedRecipes => {
-        if(fetchedRecipes.length === 0){
-            showTimedMessage("No Matched Recipes", 3000)
-            return
-        }
-        allRecipes = fetchedRecipes
-        renderer.renderRecipes(allRecipes)
-        console.log(allRecipes)
-    })
+    currentIngredient = ingredient
+    fetchAndRenderRecipesByIngredient()
 
     inputJqueryObject.val('')
 })
@@ -110,26 +101,22 @@ function filterOutDairyRecipes(event){
 
 function navigateRight(){
     pageNum += 1
-    apiManager.fetchRecipesByIngredient(this.currentIngredient, pageNum).then(fetchedRecipes => {
-        if(fetchedRecipes.length === 0){
-            showTimedMessage("No Matched Recipes", 3000)
-            return
-        }
-        allRecipes = fetchedRecipes
-        renderer.renderRecipes(allRecipes)
-        console.log(allRecipes)
-    })
+    fetchAndRenderRecipesByIngredient()
 }
 
 function navigateLeft(){
     pageNum -= 1
-    apiManager.fetchRecipesByIngredient(this.currentIngredient, pageNum).then(fetchedRecipes => {
-        if(fetchedRecipes.length === 0){
-            showTimedMessage("No Matched Recipes", 3000)
-            return
-        }
-        allRecipes = fetchedRecipes
-        renderer.renderRecipes(allRecipes)
-        console.log(allRecipes)
-    })
+    fetchAndRenderRecipesByIngredient()
+}
+
+
+
+
+function showTimedMessage(message, timer){
+    alertJqueryObject.css('visibility', 'visible')
+    alertMessageJqueryObject.text(message)
+
+    setTimeout(() => {
+        alertJqueryObject.css('visibility', 'hidden')
+    }, timer)
 }
