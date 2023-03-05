@@ -1,5 +1,5 @@
 const dairyIngredients = ["Cream","Cheese","Milk","Butter","Creme","Ricotta","Mozzarella","Custard","Cream Cheese"]
-const glutenIngredients = ["Flour","Bread","spaghetti","Biscuits","Beer"]
+const glutenIngredients = ["Flour","Bread","Spaghetti","Biscuits","Beer"]
 
 function arrHasDuplicates(arr){
     return arr.length != new Set(arr).size

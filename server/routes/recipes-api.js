@@ -6,6 +6,7 @@ const router = express.Router()
 
 const RECIPES_BY_INGREDIENT_URL = 'https://recipes-goodness-elevation.herokuapp.com/recipes/ingredient/';
 const RECIPE_BY_ID_URL = 'https://recipes-goodness-elevation.herokuapp.com/recipes/id/'
+const RECIPES_LIMIT = 6
 
 function fetch(url){
     return urllib.request(url, function(err, response){
@@ -25,7 +26,7 @@ router.get('/recipes/:id', function (req, res) {
     const id = req.params.id
 
     if(!id){
-        res.status(400).send({error: "BadRequest: filterByIngredient query not found."})
+        res.status(400).send({error: "BadRequest: id query parameter not found."})
         return
     }
 
@@ -38,8 +39,22 @@ router.get('/recipes/:id', function (req, res) {
         })
 })
 
+function getRecipesPatch(recipes, patchNum){
+    const recipesLen = recipes.length
+
+    const startIndex = (patchNum - 1) * 6
+    const endIndex = patchNum * RECIPES_LIMIT
+
+    console.log(startIndex, endIndex)
+
+    return recipes.slice(startIndex, endIndex)
+}
+
 router.get('/recipes', function (req, res) {
     const ingredient = req.query?.filterByIngredient
+    const patchNum = req.query?.patchNum
+
+    //patch num check
 
     if(!ingredient){
         res.status(400).send({error: "BadRequest: filterByIngredient query not found."})
@@ -55,7 +70,7 @@ router.get('/recipes', function (req, res) {
                 recipes.addRecipe(new Recipe(recipe.idMeal, recipe.title, recipe.ingredients, recipe.thumbnail, recipe.href))
             });
 
-            res.send(JSON.stringify(recipes))
+            res.send(JSON.stringify(getRecipesPatch(recipes._recipes, patchNum)))
         })
         .catch(err => {
             res.status(404).send({})

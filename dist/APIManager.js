@@ -2,10 +2,10 @@ class APIManager {
     constructor(){
     }
 
-    fetchRecipesByIngredient(ingredient){
-        return $.getJSON(`/recipes?filterByIngredient=${ingredient}`)    
+    fetchRecipesByIngredient(ingredient, patchNum){
+        return $.getJSON(`/recipes?filterByIngredient=${ingredient}&patchNum=${patchNum}`)    
             .then(data => {
-                return data._recipes
+                return data
             })
     }
 }

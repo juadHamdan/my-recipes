@@ -4,6 +4,7 @@ const filteringOptions = {
     glutenFreeClicked: false,
     dairyFreeClicked: false
 }
+const pageNum = 1
 
 const renderer = new Renderer()
 const apiManager = new APIManager()
@@ -21,6 +22,17 @@ function showTimedMessage(message, timer){
 }
 
 
+apiManager.fetchRecipesByIngredient("oil", pageNum).then(fetchedRecipes => {
+    if(fetchedRecipes.length === 0){
+        showTimedMessage("No Matched Recipes", 3000)
+        return
+    }
+    allRecipes = fetchedRecipes
+    renderer.renderRecipes(allRecipes)
+    console.log(allRecipes)
+})
+
+
 $(".search-btn").click(function(){
     let inputJqueryObject = $(this).closest("div").find("input")
     let ingredient = inputJqueryObject.val()
@@ -30,7 +42,7 @@ $(".search-btn").click(function(){
         return 
     }
 
-    apiManager.fetchRecipesByIngredient(ingredient).then(fetchedRecipes => {
+    apiManager.fetchRecipesByIngredient(ingredient, pageNum).then(fetchedRecipes => {
         if(fetchedRecipes.length === 0){
             showTimedMessage("No Matched Recipes", 3000)
             return
