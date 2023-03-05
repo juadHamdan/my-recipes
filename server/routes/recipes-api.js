@@ -41,7 +41,6 @@ router.get('/recipes/:id', function (req, res) {
 
 function getRecipesPatch(recipes, patchNum){
     const numOfPatches = Math.ceil(recipes.length / RECIPES_LIMIT)
-    console.log(numOfPatches)
 
     if(patchNum <= 0 || patchNum > numOfPatches){
         throw new Error('PatchNum is out of limit')
@@ -49,8 +48,6 @@ function getRecipesPatch(recipes, patchNum){
 
     const startIndex = (patchNum - 1) * 6
     const endIndex = patchNum * RECIPES_LIMIT
-
-    console.log(startIndex, endIndex)
 
     return recipes.slice(startIndex, endIndex)
 }

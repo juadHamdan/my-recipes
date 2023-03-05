@@ -22,10 +22,9 @@ function fetchAndRenderRecipesByIngredient(){
         }
         allRecipes = fetchedRecipes
         renderer.renderRecipes(allRecipes)
-        console.log(allRecipes)
     }).catch(err => {
         if(pageNum <= 0){
-            showTimedMessage("No More Recipes", 2000)
+            showTimedMessage("You Are At First Page", 2000)
             pageNum = 1
         }
         else{
@@ -61,7 +60,7 @@ $('.recipes').on("click", ".recipe", function(event){
 
 $('.recipes').on("click", ".recipe img", function(){
     const message = $(this).closest('div').siblings('.ingredients').find('li:first-child').text()
-    alert(message)
+    showTimedMessage("The first ingredient is: " + message, 2000)
 })
 
 
